@@ -1,4 +1,4 @@
-package com.technophobia.substeps.database.impl.runner;
+package com.technophobia.substeps.database.runner;
 
 import java.sql.Connection;
 

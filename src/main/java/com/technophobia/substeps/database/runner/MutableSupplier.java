@@ -16,7 +16,7 @@
  *    You should have received a copy of the GNU Lesser General Public License
  *    along with Substeps.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.technophobia.substeps.database.impl.runner;
+package com.technophobia.substeps.database.runner;
 
 import com.google.common.base.Supplier;
 

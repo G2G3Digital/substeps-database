@@ -1,11 +1,11 @@
-package com.technophobia.substeps.database.impl.runner;
+package com.technophobia.substeps.database.runner;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 import com.mchange.v2.c3p0.DataSources;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static com.technophobia.substeps.database.impl.runner.DatabaseSubstepsConfiguration.*;
+import static com.technophobia.substeps.database.runner.DatabaseSubstepsConfiguration.*;
 
 import java.beans.PropertyVetoException;
 import java.sql.Connection;
