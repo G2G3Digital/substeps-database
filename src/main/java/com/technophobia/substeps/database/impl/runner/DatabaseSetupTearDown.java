@@ -1,25 +1,39 @@
 package com.technophobia.substeps.database.impl.runner;
 
+import com.technophobia.substeps.model.Scope;
 import com.technophobia.substeps.runner.setupteardown.Annotations;
 
 public class DatabaseSetupTearDown {
 
-    @Annotations.BeforeEveryScenario
-    public final void initialiseContext() {
-        EmailServerContext emailServerContext = new EmailServerContext();
-        emailServerContextSupplier.set(emailServerContext);
-        emailServerContext.start();
+    private static final String DATABASE_EXECUTION_CONTEXT_KEY = DatabaseExecutionContext.class.getName();
+    private static final String DATABASE_CONNECTION_CONTEXT_KEY = DatabaseConnectionContext.class.getName();
 
-        EmailExecutionContext emailExecutionContext = new EmailExecutionContext();
-        emailExecutionContextSupplier.set(emailExecutionContext);
+    private static final MutableSupplier<DatabaseExecutionContext> executionContextSupplier = new ExecutionContextSupplier<DatabaseExecutionContext>(Scope.SCENARIO, DATABASE_EXECUTION_CONTEXT_KEY);
+    private static final MutableSupplier<DatabaseConnectionContext> connectioncontextSupplier = new ExecutionContextSupplier<DatabaseConnectionContext>(Scope.SUITE, DATABASE_CONNECTION_CONTEXT_KEY);
+
+    public static DatabaseExecutionContext getExecutionContext() {
+        return executionContextSupplier.get();
     }
 
-    @Annotations.AfterEveryScenario
-    public final void shutdownContext() {
-        final EmailServerContext emailServerContext = emailServerContextSupplier.get();
-        if (emailServerContext != null) {
-            emailServerContext.stop();
-        }
+    public static DatabaseConnectionContext getConnectionContext() {
+        return connectioncontextSupplier.get();
+    }
+
+    @Annotations.BeforeAllFeatures
+    public final void initialiseConnectionPool() {
+        final DatabaseConnectionContext connectionContext = new C3PODatabaseConnectionContext();
+        connectioncontextSupplier.set(connectionContext);
+    }
+
+    @Annotations.BeforeEveryScenario
+    public final void initialiseContext() {
+        final DatabaseExecutionContext executionContext = new DatabaseExecutionContext();
+        executionContextSupplier.set(executionContext);
+    }
+
+    @Annotations.AfterAllFeatures
+    public final void destroyConnectionPool() {
+        getConnectionContext().destroy();
     }
 
 }
