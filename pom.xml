@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.technophobia.substeps</groupId>
+    <artifactId>database-substeps</artifactId>
+    <version>1.1.1-SNAPSHOT</version>
+
+    <packaging>jar</packaging>
+    <name>Database Substeps</name>
+    <description>Database step implementations</description>
+
+    <!-- for OSS hosting -->
+    <parent>
+        <groupId>org.sonatype.oss</groupId>
+        <artifactId>oss-parent</artifactId>
+        <version>7</version>
+    </parent>
+
+    <organization>
+        <name>Technophobia Ltd</name>
+        <url>www.technophobia.com/</url>
+    </organization>
+
+    <licenses>
+        <license>
+            <name>LGPL 3.0 license</name>
+            <url>http://www.opensource.org/licenses/lgpl-3.0.html</url>
+            <distribution>manual</distribution>
+        </license>
+    </licenses>
+
+    <developers>
+        <developer>
+            <id>iantmoore</id>
+            <name>Ian Moore</name>
+            <organization>Technophobia</organization>
+            <roles>
+                <role>architect</role>
+                <role>developer</role>
+            </roles>
+        </developer>
+
+        <developer>
+            <id>rorygibson</id>
+            <name>Rory Gibson</name>
+            <organization>Technophobia</organization>
+            <roles>
+                <role>developer</role>
+            </roles>
+        </developer>
+
+        <developer>
+            <id>davemoss</id>
+            <name>Dave Moss</name>
+            <organization>Technophobia</organization>
+            <roles>
+                <role>developer</role>
+            </roles>
+        </developer>
+
+        <developer>
+            <id>stuartforbes</id>
+            <name>Stu Forbes</name>
+            <organization>Technophobia</organization>
+            <roles>
+                <role>developer</role>
+            </roles>
+        </developer>
+
+
+        <developer>
+            <id>rickybarefield</id>
+            <name>Ricky Barefield</name>
+            <organization>Technophobia</organization>
+            <roles>
+                <role>developer</role>
+            </roles>
+        </developer>
+
+    </developers>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
+        <substeps.api.version>1.1.0</substeps.api.version>
+        <substeps.glossary.version>1.1.0</substeps.glossary.version>
+        <substeps.core.version>1.1.0</substeps.core.version>
+        <substeps.runners.version>1.1.0</substeps.runners.version>
+
+    </properties>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>com.technophobia.substeps</groupId>
+            <artifactId>substeps-core-api</artifactId>
+            <version>${substeps.api.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit-dep</artifactId>
+            <version>4.10</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-core</artifactId>
+            <version>1.2.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-library</artifactId>
+            <version>1.2.1</version>
+        </dependency>
+
+        <!-- Test dependencies -->
+
+        <dependency>
+            <groupId>com.technophobia.substeps</groupId>
+            <artifactId>substeps-core</artifactId>
+            <version>${substeps.core.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.technophobia.substeps</groupId>
+            <artifactId>substeps-junit-runner</artifactId>
+            <version>${substeps.runners.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>1.6.4</version>
+            <scope>test</scope>
+        </dependency>
+
+    </dependencies>
+
+    <profiles>
+
+        <profile>
+            <id>generate-glossary</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+
+
+                    <plugin>
+                        <groupId>com.technophobia.substeps</groupId>
+                        <artifactId>substeps-glossary-builder</artifactId>
+                        <version>${substeps.glossary.version}</version>
+
+                        <executions>
+                            <execution>
+                                <id>Build SubSteps Glossary</id>
+                                <phase>process-test-resources</phase>
+                                <goals>
+                                    <goal>generate-docs</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+
+                        <configuration>
+                            <stepImplementationClassNames>
+                                <param>
+                                    com.technophobia.webdriver.substeps.impl.AssertionWebDriverSubStepImplementations
+                                </param>
+                                <param>com.technophobia.webdriver.substeps.impl.ActionWebDriverSubStepImplementations
+                                </param>
+
+                                <param>com.technophobia.webdriver.substeps.impl.FinderWebDriverSubStepImplementations
+                                </param>
+                                <param>com.technophobia.webdriver.substeps.impl.FormWebDriverSubStepImplementations
+                                </param>
+                                <param>com.technophobia.webdriver.substeps.impl.StartupWebDriverSubStepImplementations
+                                </param>
+                                <param>com.technophobia.webdriver.substeps.impl.TableSubStepImplementations</param>
+                            </stepImplementationClassNames>
+
+                            <glossaryPublisher
+                                    implementation="com.technophobia.substeps.glossary.JsonSubstepsPublisher">
+                                <outputFile>${project.build.directory}/stepimplementations.json</outputFile>
+                            </glossaryPublisher>
+
+                        </configuration>
+
+
+                        <dependencies>
+                            <dependency>
+                                <groupId>org.slf4j</groupId>
+                                <artifactId>slf4j-log4j12</artifactId>
+                                <version>1.6.4</version>
+                            </dependency>
+                        </dependencies>
+
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+
+    </profiles>
+
+    <build>
+        <plugins>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.0</version>
+                <configuration>
+                    <source>1.5</source>
+                    <target>1.5</target>
+                </configuration>
+            </plugin>
+
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.3.2</version>
+                <configuration>
+                    <localCheckout>true</localCheckout>
+                    <pushChanges>false</pushChanges>
+                </configuration>
+
+            </plugin>
+
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.8.1</version>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-failsafe-plugin</artifactId>
+                <version>2.8</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>integration-test</goal>
+                            <goal>verify</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <includes>
+                        <include>**/*Test.java</include>
+                    </includes>
+                    <excludes>
+                        <exclude>**/SelfTests.java</exclude>
+                    </excludes>
+                </configuration>
+            </plugin>
+
+
+        </plugins>
+    </build>
+
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-report-plugin</artifactId>
+                <version>2.12.4</version>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>report-only</report>
+                        </reports>
+                        <configuration>
+                            <reportsDirectories>
+                                <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
+                                <reportsDirectory>${project.build.directory}/failsafe-reports</reportsDirectory>
+                            </reportsDirectories>
+                        </configuration>
+                    </reportSet>
+                </reportSets>
+            </plugin>
+        </plugins>
+    </reporting>
+
+</project>
