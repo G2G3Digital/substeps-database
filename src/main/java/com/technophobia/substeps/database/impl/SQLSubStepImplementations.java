@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 import com.technophobia.substeps.database.runner.DatabaseSetupTearDown;
 import com.technophobia.substeps.model.SubSteps;
 
-@SubSteps.StepImplementations
+@SubSteps.StepImplementations(requiredInitialisationClasses = DatabaseSetupTearDown.class)
 public class SQLSubStepImplementations {
 
     private static final Logger LOG = LoggerFactory.getLogger(SQLSubStepImplementations.class);
@@ -38,6 +38,14 @@ public class SQLSubStepImplementations {
 
         execute(sql);
 
+    }
+
+    @SubSteps.Step("ExecuteUpdate \\{([^\\}]*)\\}")
+    public void executeUpdate(final String sql) {
+
+        LOG.debug("Executing sql update [{}]", sql);
+
+        update(sql);
     }
     
     /**
@@ -117,6 +125,22 @@ public class SQLSubStepImplementations {
         } finally {
 
         	close(connection);
+        }
+    }
+
+
+    private void update(String sql) {
+
+        Connection connection = null;
+        try {
+            connection = DatabaseSetupTearDown.getConnectionContext().getConnection();
+            PreparedStatement statement = connection.prepareStatement(sql);
+            statement.executeUpdate();
+        } catch (SQLException ex) {
+            LOG.error(ex.getMessage(), ex);
+            throw new AssertionError("Executing sql update [" + sql + "] failed:" + ex.getMessage(), ex);
+        } finally {
+            close(connection);
         }
     }
 
