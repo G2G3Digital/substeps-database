@@ -6,4 +6,4 @@ CREATE TABLE CARS (MODEL VARCHAR(30), COLOUR VARCHAR(30));
 
 
 INSERT INTO CARS VALUES ('Fiesta', 'red');
-INSERT INTO CARS VALUES ('Three Weeler', 'yellow');
+INSERT INTO CARS VALUES ('Three Wheeler', 'yellow');
