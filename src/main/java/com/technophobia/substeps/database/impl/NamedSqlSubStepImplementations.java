@@ -1,7 +1,6 @@
 package com.technophobia.substeps.database.impl;
 
 import com.technophobia.substeps.database.runner.DatabaseSubstepsConfiguration;
-import com.technophobia.substeps.model.Configuration;
 import com.technophobia.substeps.model.SubSteps;
 import org.junit.Assert;
 import org.slf4j.Logger;
@@ -50,6 +49,18 @@ public class NamedSqlSubStepImplementations extends SQLSubStepImplementations {
         LOG.debug("Running query {} ({})", name, sql);
 
         executeQuery(sql);
+    }
+
+    @SubSteps.Step("ExecuteNamedUpdate \"([^\"]*)\"")
+    public void executeNamedUpdate(final String name) {
+
+        String sql = properties.getProperty(name);
+
+        Assert.assertNotNull("No query found with name " + name, sql);
+
+        LOG.debug("Executing update {} ({})", name, sql);
+
+        executeUpdate(sql);
     }
 
 }
