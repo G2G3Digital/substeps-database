@@ -53,7 +53,7 @@ public class NamedSqlSubStepImplementations extends SQLSubStepImplementations {
 
         String sql = lookupNamedQuery(name);
 
-        LOG.debug("Running query {} ({})", name, sql);
+        LOG.debug("Running query {}", sql);
 
         executeQuery(sql);
     }
@@ -63,7 +63,7 @@ public class NamedSqlSubStepImplementations extends SQLSubStepImplementations {
 
         String sql = lookupNamedQuery(name);
 
-        LOG.debug("Executing update {} ({})", name, sql);
+        LOG.debug("Executing update {}", sql);
 
         executeUpdate(sql);
     }
@@ -202,7 +202,15 @@ public class NamedSqlSubStepImplementations extends SQLSubStepImplementations {
 
     private String lookupNamedQuery(final String name) {
 
-        String sql = properties.getProperty(name);
+        String databaseType = DatabaseSubstepsConfiguration.getDatabaseType();
+
+        String sql = properties.getProperty(name + "." + databaseType);
+
+        if (sql != null) {
+            LOG.debug("Resolved query for {} as {}.{}", new Object[] {name, name, databaseType});
+        } else {
+            sql = properties.getProperty(name);
+        }
 
         Assert.assertNotNull("No query found with name " + name, sql);
 

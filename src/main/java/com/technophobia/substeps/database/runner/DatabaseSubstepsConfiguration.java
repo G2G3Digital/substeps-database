@@ -18,6 +18,7 @@ public class DatabaseSubstepsConfiguration {
     private static final String USER;
     private static final String PASSWORD;
     private static final String NAMED_QUERY_PROPERTY_FILE;
+    private static final String DATABASE_TYPE;
     private static final int MAX_POOLED_STATEMENTS;
     private static final int MIN_POOL_SIZE;
     private static final int MAX_POOL_SIZE;
@@ -34,6 +35,7 @@ public class DatabaseSubstepsConfiguration {
         USER = Configuration.INSTANCE.getString("database.user");
         PASSWORD = Configuration.INSTANCE.getString("database.password");
         NAMED_QUERY_PROPERTY_FILE = Configuration.INSTANCE.getString("database.query.file");
+        DATABASE_TYPE = Configuration.INSTANCE.getString("database.type");
         MAX_POOLED_STATEMENTS = Configuration.INSTANCE.getInt("database.max.pooled.statements");
         MIN_POOL_SIZE = Configuration.INSTANCE.getInt("database.min.pool.size");
         MAX_POOL_SIZE = Configuration.INSTANCE.getInt("database.max.pool.size");
@@ -64,6 +66,10 @@ public class DatabaseSubstepsConfiguration {
 
     public static int getMaxPooledStatements() {
         return MAX_POOLED_STATEMENTS;
+    }
+
+    public static String getDatabaseType() {
+        return DATABASE_TYPE;
     }
 
     public static int getMinPoolSize() {

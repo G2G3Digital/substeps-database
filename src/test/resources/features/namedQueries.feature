@@ -22,3 +22,7 @@ Scenario: I can execute an insert named query with parameters
     ExecuteUpdate
     ExecuteQuery {SELECT COLOUR FROM CARS WHERE MODEL = 'db7'}
     AssertQueryResultContains column="COLOUR" value="black"
+
+Scenario: The query named test-database-type is resolved with the h2 version
+    ExecuteNamedQuery "test-database-type"
+    AssertQueryResultContains column="NUM" value="2"
