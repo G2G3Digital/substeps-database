@@ -1,12 +1,16 @@
 package com.technophobia.substeps.database.runner;
 
+import java.math.BigDecimal;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Time;
+import java.sql.Timestamp;
+import java.sql.Types;
+import java.util.Date;
+
 import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.math.BigDecimal;
-import java.sql.*;
-import java.util.Date;
 
 /**
  * A context to contain a statement being operated on
@@ -19,6 +23,7 @@ public class DatabaseStatementContext {
 
     public void setStatement(final PreparedStatement statement) {
         this.statement = statement;
+        argumentIndex = 1;
     }
 
     public PreparedStatement getStatement() {
