@@ -22,10 +22,10 @@ public class DatabaseStatementContext {
     private int argumentIndex = 1;
 
     public void setStatement(final PreparedStatement statement) {
+        closeStatement();
 
         LOG.debug("setting new prepared statement");
 
-        closeStatement();
         this.statement = statement;
     }
 
