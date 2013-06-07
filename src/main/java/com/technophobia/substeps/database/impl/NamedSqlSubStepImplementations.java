@@ -1,5 +1,12 @@
 package com.technophobia.substeps.database.impl;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.Properties;
+
 import com.technophobia.substeps.database.runner.DatabaseSetupTearDown;
 import com.technophobia.substeps.database.runner.DatabaseSubstepsConfiguration;
 import com.technophobia.substeps.model.SubSteps;
@@ -10,13 +17,6 @@ import com.technophobia.substeps.model.parameter.LongConverter;
 import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.util.Properties;
 
 /**
  * Run named queries from a properties file
@@ -70,6 +70,8 @@ public class NamedSqlSubStepImplementations extends SQLSubStepImplementations {
 
     @SubSteps.Step("FetchNamedQuery \"([^\"]*)\"")
     public void fetchNamedQuery(final String name) {
+
+        LOG.debug("fetching query \"{}\"", name);
 
         String sql = lookupNamedQuery(name);
 

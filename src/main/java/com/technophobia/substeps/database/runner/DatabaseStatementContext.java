@@ -22,6 +22,9 @@ public class DatabaseStatementContext {
     private int argumentIndex = 1;
 
     public void setStatement(final PreparedStatement statement) {
+
+        LOG.debug("setting new prepared statement");
+
         closeStatement();
         this.statement = statement;
     }
@@ -215,7 +218,10 @@ public class DatabaseStatementContext {
 
     public void closeStatement() {
         argumentIndex = 1;
+
         if (statement != null) {
+            LOG.debug("closing statement");
+
             try {
                 statement.close();
             } catch (SQLException e) {
