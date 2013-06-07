@@ -107,7 +107,7 @@ public class NamedSqlSubStepImplementations extends SQLSubStepImplementations {
     @SubSteps.Step("AddIntegerParameter value=([0-9]*)")
     public void addIntegerParameter(@SubSteps.StepParameter(converter = IntegerConverter.class) final Integer value) {
 
-        LOG.debug("Adding String parameter {}", value);
+        LOG.debug("Adding Integer parameter {}", value);
 
         DatabaseSetupTearDown.getStatementContext().addIntegerParameter(value);
     }
