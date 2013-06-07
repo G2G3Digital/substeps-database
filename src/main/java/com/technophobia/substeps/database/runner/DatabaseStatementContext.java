@@ -22,8 +22,8 @@ public class DatabaseStatementContext {
     private int argumentIndex = 1;
 
     public void setStatement(final PreparedStatement statement) {
+        closeStatement();
         this.statement = statement;
-        argumentIndex = 1;
     }
 
     public PreparedStatement getStatement() {
@@ -214,6 +214,7 @@ public class DatabaseStatementContext {
     }
 
     public void closeStatement() {
+        argumentIndex = 1;
         if (statement != null) {
             try {
                 statement.close();
