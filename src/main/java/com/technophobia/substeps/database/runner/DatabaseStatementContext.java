@@ -239,13 +239,15 @@ public class DatabaseStatementContext {
     public void closeConnection() {
         closeStatement();
 
-        try {
-            LOG.debug("closing connection");
-            connection.close();
-        } catch (SQLException e) {
-            LOG.warn(e.getMessage());
-        } finally {
-            connection = null;
+        if (connection != null) {
+            try {
+                LOG.debug("closing connection");
+                connection.close();
+            } catch (SQLException e) {
+                LOG.warn(e.getMessage());
+            } finally {
+                connection = null;
+            }
         }
     }
 }
