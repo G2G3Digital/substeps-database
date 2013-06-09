@@ -40,8 +40,8 @@ public class DatabaseSetupTearDown {
     }
 
     @Annotations.AfterEveryScenario
-    public final void destroyOpenStatement() {
-        getStatementContext().closeStatement();
+    public final void destroyOpenConnection() {
+        getStatementContext().closeConnection();
     }
 
     @Annotations.AfterAllFeatures

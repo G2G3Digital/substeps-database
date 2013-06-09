@@ -22,3 +22,19 @@ Scenario: I can execute an insert named query with parameters
     ExecuteUpdate
     ExecuteQuery {SELECT COLOUR FROM CARS WHERE MODEL = 'db7'}
     AssertQueryResultContains column="COLOUR" value="black"
+
+Scenario: I can run multiple named queries in one scenario
+    ExecuteUpdate {CREATE TABLE types (s VARCHAR(10), i INTEGER, l BIGINT, d DOUBLE, b BOOLEAN)}
+    FetchNamedQuery "test-insert-string"
+    AddIntegerParameter value=4
+    ExecuteUpdate
+    FetchNamedQuery "test-insert-boolean"
+    AddBooleanParameter value=true
+    ExecuteUpdate
+    ExecuteQuery {SELECT * FROM types WHERE s = '4'}
+    AssertQueryResultContains column="S" value="4"
+    FetchNamedQuery "test-insert-integer"
+    AddIntegerParameter value=10
+    ExecuteUpdate
+    ExecuteQuery {SELECT * FROM types WHERE S = '4'}
+    AssertQueryResultContains column="S" value="4"
