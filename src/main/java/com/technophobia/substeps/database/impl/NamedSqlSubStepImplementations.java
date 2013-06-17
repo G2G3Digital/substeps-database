@@ -1,12 +1,5 @@
 package com.technophobia.substeps.database.impl;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.util.Properties;
-
 import com.technophobia.substeps.database.runner.DatabaseSetupTearDown;
 import com.technophobia.substeps.database.runner.DatabaseSubstepsConfiguration;
 import com.technophobia.substeps.model.SubSteps;
@@ -17,6 +10,12 @@ import com.technophobia.substeps.model.parameter.LongConverter;
 import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.Properties;
 
 /**
  * Run named queries from a properties file
@@ -76,16 +75,7 @@ public class NamedSqlSubStepImplementations extends SQLSubStepImplementations {
 
         String sql = lookupNamedQuery(name);
 
-        final Connection connection = DatabaseSetupTearDown.getConnectionContext().getConnection();
-
-        try {
-
-            DatabaseSetupTearDown.getStatementContext().setStatement(connection.prepareStatement(sql));
-
-        } catch (SQLException e) {
-            LOG.error(e.getMessage(), e);
-            throw new AssertionError("Error creating query " + name + " (" + sql + ")");
-        }
+        DatabaseSetupTearDown.getStatementContext().prepareStatement(sql);
     }
 
     @SubSteps.Step("AddStringParameter value=\"([^\"]*)\"")

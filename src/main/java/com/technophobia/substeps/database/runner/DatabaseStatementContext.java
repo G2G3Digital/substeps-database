@@ -1,16 +1,12 @@
 package com.technophobia.substeps.database.runner;
 
-import java.math.BigDecimal;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.sql.Time;
-import java.sql.Timestamp;
-import java.sql.Types;
-import java.util.Date;
-
 import org.junit.Assert;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.math.BigDecimal;
+import java.sql.*;
+import java.util.Date;
 
 /**
  * A context to contain a statement being operated on
@@ -19,14 +15,22 @@ import org.slf4j.LoggerFactory;
 public class DatabaseStatementContext {
     private static final Logger LOG = LoggerFactory.getLogger(DatabaseStatementContext.class);
     private PreparedStatement statement;
+    private Connection connection;
     private int argumentIndex = 1;
 
-    public void setStatement(final PreparedStatement statement) {
-        closeStatement();
+    public void prepareStatement(final String sql) {
+        if (connection == null) {
+            connection = DatabaseSetupTearDown.getConnectionContext().getConnection();
+        } else {
+            closeStatement();
+        }
 
-        LOG.debug("setting new prepared statement");
-
-        this.statement = statement;
+        try {
+            statement = connection.prepareStatement(sql);
+        } catch (SQLException e) {
+            LOG.error(e.getMessage());
+            throw new AssertionError(e);
+        }
     }
 
     public PreparedStatement getStatement() {
@@ -228,6 +232,21 @@ public class DatabaseStatementContext {
                 LOG.warn("Error closing database statement", e);
             } finally {
                 statement = null;
+            }
+        }
+    }
+
+    public void closeConnection() {
+        closeStatement();
+
+        if (connection != null) {
+            try {
+                LOG.debug("closing connection");
+                connection.close();
+            } catch (SQLException e) {
+                LOG.warn(e.getMessage());
+            } finally {
+                connection = null;
             }
         }
     }
