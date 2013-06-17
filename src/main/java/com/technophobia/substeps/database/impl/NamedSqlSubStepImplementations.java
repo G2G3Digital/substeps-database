@@ -21,6 +21,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Run named queries from a properties file
  */
+@SubSteps.StepImplementations(requiredInitialisationClasses = DatabaseSetupTearDown.class)
 public class NamedSqlSubStepImplementations extends SQLSubStepImplementations {
     private static final Logger LOG = LoggerFactory.getLogger(NamedSqlSubStepImplementations.class);
 
