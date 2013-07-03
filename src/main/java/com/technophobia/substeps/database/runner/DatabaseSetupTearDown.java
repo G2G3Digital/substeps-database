@@ -27,7 +27,7 @@ public class DatabaseSetupTearDown {
 
     @Annotations.BeforeAllFeatures
     public final void initialiseConnectionPool() {
-        final DatabaseConnectionContext connectionContext = new C3PODatabaseConnectionContext();
+        final DatabaseConnectionContext connectionContext = new C3P0DatabaseConnectionContext();
         connectioncontextSupplier.set(connectionContext);
     }
 
