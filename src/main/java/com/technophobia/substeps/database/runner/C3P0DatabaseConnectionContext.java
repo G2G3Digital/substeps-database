@@ -1,26 +1,35 @@
 package com.technophobia.substeps.database.runner;
 
-import com.mchange.v2.c3p0.ComboPooledDataSource;
-import com.mchange.v2.c3p0.DataSources;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import static com.technophobia.substeps.database.runner.DatabaseSubstepsConfiguration.*;
+import static com.technophobia.substeps.database.runner.DatabaseSubstepsConfiguration.getAcquireIncrement;
+import static com.technophobia.substeps.database.runner.DatabaseSubstepsConfiguration.getDriverClass;
+import static com.technophobia.substeps.database.runner.DatabaseSubstepsConfiguration.getInitialPoolSize;
+import static com.technophobia.substeps.database.runner.DatabaseSubstepsConfiguration.getJdbcUrl;
+import static com.technophobia.substeps.database.runner.DatabaseSubstepsConfiguration.getMaxIdleTime;
+import static com.technophobia.substeps.database.runner.DatabaseSubstepsConfiguration.getMaxPoolSize;
+import static com.technophobia.substeps.database.runner.DatabaseSubstepsConfiguration.getMaxPooledStatements;
+import static com.technophobia.substeps.database.runner.DatabaseSubstepsConfiguration.getMinPoolSize;
+import static com.technophobia.substeps.database.runner.DatabaseSubstepsConfiguration.getPassword;
+import static com.technophobia.substeps.database.runner.DatabaseSubstepsConfiguration.getUser;
 
 import java.beans.PropertyVetoException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import com.mchange.v2.c3p0.ComboPooledDataSource;
+import com.mchange.v2.c3p0.DataSources;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Database connection provider that uses C3PO database connection pooling.
  */
-public class C3PODatabaseConnectionContext implements DatabaseConnectionContext {
+public class C3P0DatabaseConnectionContext implements DatabaseConnectionContext {
 
-    private static final Logger LOG = LoggerFactory.getLogger(C3PODatabaseConnectionContext.class);
+    private static final Logger LOG = LoggerFactory.getLogger(C3P0DatabaseConnectionContext.class);
 
     private final ComboPooledDataSource dataSource;
 
-    public C3PODatabaseConnectionContext() {
+    public C3P0DatabaseConnectionContext() {
 
         dataSource = new ComboPooledDataSource();
 
