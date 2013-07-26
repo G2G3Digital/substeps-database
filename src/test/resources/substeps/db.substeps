@@ -1,0 +1,4 @@
+# some base substeps
+
+Define: SetupTest DB
+    ExecuteScript "/myScript.sql"

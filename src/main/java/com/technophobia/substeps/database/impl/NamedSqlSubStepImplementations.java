@@ -1,21 +1,42 @@
-package com.technophobia.substeps.database.impl;
+/*
+ *  Copyright Technophobia Ltd & Alan Raison 2013
+ *
+ *   This file is part of Substeps.
+ *
+ *    Substeps is free software: you can redistribute it and/or modify
+ *    it under the terms of the GNU Lesser General Public License as published by
+ *    the Free Software Foundation, either version 3 of the License, or
+ *    (at your option) any later version.
+ *
+ *    Substeps is distributed in the hope that it will be useful,
+ *    but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *    GNU Lesser General Public License for more details.
+ *
+ *    You should have received a copy of the GNU Lesser General Public License
+ *    along with Substeps.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
-import com.technophobia.substeps.database.runner.DatabaseSetupTearDown;
-import com.technophobia.substeps.database.runner.DatabaseSubstepsConfiguration;
-import com.technophobia.substeps.model.SubSteps;
-import com.technophobia.substeps.model.parameter.BooleanConverter;
-import com.technophobia.substeps.model.parameter.DoubleConverter;
-import com.technophobia.substeps.model.parameter.IntegerConverter;
-import com.technophobia.substeps.model.parameter.LongConverter;
-import org.junit.Assert;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+package com.technophobia.substeps.database.impl;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Properties;
+
+import org.junit.Assert;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.technophobia.substeps.database.runner.DatabaseSetupTearDown;
+import com.technophobia.substeps.database.runner.DatabaseSubstepsConfiguration;
+import com.technophobia.substeps.model.SubSteps;
+import com.technophobia.substeps.model.exception.SubstepsException;
+import com.technophobia.substeps.model.parameter.BooleanConverter;
+import com.technophobia.substeps.model.parameter.DoubleConverter;
+import com.technophobia.substeps.model.parameter.IntegerConverter;
+import com.technophobia.substeps.model.parameter.LongConverter;
 
 /**
  * Run named queries from a properties file
@@ -25,6 +46,7 @@ public class NamedSqlSubStepImplementations extends SQLSubStepImplementations {
     private static final Logger LOG = LoggerFactory.getLogger(NamedSqlSubStepImplementations.class);
 
     protected Properties properties = new Properties();
+
 
     public NamedSqlSubStepImplementations() {
 
@@ -38,8 +60,8 @@ public class NamedSqlSubStepImplementations extends SQLSubStepImplementations {
 
             if (queryFileStream != null) {
                 try {
-                    properties.load(queryFileStream);
-                } catch (IOException e) {
+                    this.properties.load(queryFileStream);
+                } catch (final IOException e) {
                     LOG.error(e.getMessage(), e);
                     throw new AssertionError("Failed to load database.query.file");
                 }
@@ -48,35 +70,39 @@ public class NamedSqlSubStepImplementations extends SQLSubStepImplementations {
         }
     }
 
+
     @SubSteps.Step("ExecuteNamedQuery \"([^\"]*)\"")
     public void executeNamedQuery(final String name) {
 
-        String sql = lookupNamedQuery(name);
+        final String sql = lookupNamedQuery(name);
 
         LOG.debug("Running query {}", sql);
 
         executeQuery(sql);
     }
 
+
     @SubSteps.Step("ExecuteNamedUpdate \"([^\"]*)\"")
     public void executeNamedUpdate(final String name) {
 
-        String sql = lookupNamedQuery(name);
+        final String sql = lookupNamedQuery(name);
 
         LOG.debug("Executing update {}", sql);
 
         executeUpdate(sql);
     }
 
+
     @SubSteps.Step("FetchNamedQuery \"([^\"]*)\"")
     public void fetchNamedQuery(final String name) {
 
         LOG.debug("fetching query \"{}\"", name);
 
-        String sql = lookupNamedQuery(name);
+        final String sql = lookupNamedQuery(name);
 
         DatabaseSetupTearDown.getStatementContext().prepareStatement(sql);
     }
+
 
     @SubSteps.Step("AddStringParameter value=\"([^\"]*)\"")
     public void addStringParameter(final String value) {
@@ -85,6 +111,7 @@ public class NamedSqlSubStepImplementations extends SQLSubStepImplementations {
 
         DatabaseSetupTearDown.getStatementContext().addStringParameter(value);
     }
+
 
     @SubSteps.Step("AddStringParameter value=null")
     public void addNullStringParameter() {
@@ -103,6 +130,7 @@ public class NamedSqlSubStepImplementations extends SQLSubStepImplementations {
         DatabaseSetupTearDown.getStatementContext().addIntegerParameter(value);
     }
 
+
     @SubSteps.Step("AddIntegerParameter value=null")
     public void addNullIntegerParameter() {
 
@@ -110,6 +138,7 @@ public class NamedSqlSubStepImplementations extends SQLSubStepImplementations {
 
         DatabaseSetupTearDown.getStatementContext().addIntegerParameter(null);
     }
+
 
     @SubSteps.Step("AddBooleanParameter value=(true|false)")
     public void addBooleanParameter(@SubSteps.StepParameter(converter = BooleanConverter.class) final Boolean value) {
@@ -119,6 +148,7 @@ public class NamedSqlSubStepImplementations extends SQLSubStepImplementations {
         DatabaseSetupTearDown.getStatementContext().addBooleanParameter(value);
     }
 
+
     @SubSteps.Step("AddBooleanParameter value=null")
     public void addNullBooleanParameter() {
 
@@ -126,6 +156,7 @@ public class NamedSqlSubStepImplementations extends SQLSubStepImplementations {
 
         DatabaseSetupTearDown.getStatementContext().addBooleanParameter(null);
     }
+
 
     @SubSteps.Step("AddDoubleParameter value=([0-9,.]*)")
     public void addDoubleParameter(@SubSteps.StepParameter(converter = DoubleConverter.class) final Double value) {
@@ -135,6 +166,7 @@ public class NamedSqlSubStepImplementations extends SQLSubStepImplementations {
         DatabaseSetupTearDown.getStatementContext().addDoubleParameter(value);
     }
 
+
     @SubSteps.Step("AddDoubleParameter value=null")
     public void addNullDoubleParameter() {
 
@@ -142,6 +174,7 @@ public class NamedSqlSubStepImplementations extends SQLSubStepImplementations {
 
         DatabaseSetupTearDown.getStatementContext().addDoubleParameter(null);
     }
+
 
     @SubSteps.Step("AddLongParameter value=([0-9,.]*)")
     public void addLongParameter(@SubSteps.StepParameter(converter = LongConverter.class) final Long value) {
@@ -151,6 +184,7 @@ public class NamedSqlSubStepImplementations extends SQLSubStepImplementations {
         DatabaseSetupTearDown.getStatementContext().addLongParameter(value);
     }
 
+
     @SubSteps.Step("AddLongParameter value=null")
     public void addNullLongParameter() {
 
@@ -158,6 +192,7 @@ public class NamedSqlSubStepImplementations extends SQLSubStepImplementations {
 
         DatabaseSetupTearDown.getStatementContext().addLongParameter(null);
     }
+
 
     @SubSteps.Step("ExecuteQuery")
     public void executePreparedQuery() {
@@ -167,14 +202,16 @@ public class NamedSqlSubStepImplementations extends SQLSubStepImplementations {
         LOG.debug("Executing prepared statement");
 
         try {
+
             DatabaseSetupTearDown.getExecutionContext().setQueryResult(statement.executeQuery());
-        } catch (SQLException e) {
-            LOG.error(e.getMessage(), e);
-            throw new AssertionError("Failed to execute prepared statement");
+
+        } catch (final SQLException e) {
+            throw new SubstepsException("Failed to execute prepared statement", e);
         } finally {
             DatabaseSetupTearDown.getStatementContext().closeStatement();
         }
     }
+
 
     @SubSteps.Step("ExecuteUpdate")
     public void executePreparedUpdate() {
@@ -185,7 +222,7 @@ public class NamedSqlSubStepImplementations extends SQLSubStepImplementations {
 
         try {
             statement.executeUpdate();
-        } catch (SQLException e) {
+        } catch (final SQLException e) {
             LOG.error(e.getMessage(), e);
             throw new AssertionError("Failed to execute prepared update statement");
         } finally {
@@ -193,16 +230,17 @@ public class NamedSqlSubStepImplementations extends SQLSubStepImplementations {
         }
     }
 
+
     private String lookupNamedQuery(final String name) {
 
-        String databaseType = DatabaseSubstepsConfiguration.getDatabaseType();
+        final String databaseType = DatabaseSubstepsConfiguration.getDatabaseType();
 
-        String sql = properties.getProperty(name + "." + databaseType);
+        String sql = this.properties.getProperty(name + "." + databaseType);
 
         if (sql != null) {
-            LOG.debug("Resolved query for {} as {}.{}", new Object[] {name, name, databaseType});
+            LOG.debug("Resolved query for {} as {}.{}", new Object[] { name, name, databaseType });
         } else {
-            sql = properties.getProperty(name);
+            sql = this.properties.getProperty(name);
         }
 
         Assert.assertNotNull("No query found with name " + name, sql);

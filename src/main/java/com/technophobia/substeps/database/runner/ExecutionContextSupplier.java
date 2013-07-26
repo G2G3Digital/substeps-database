@@ -18,6 +18,8 @@
  */
 package com.technophobia.substeps.database.runner;
 
+// TODO remove this class when this class is moved out of webdriver-substeps and into substeps core
+
 import com.technophobia.substeps.model.Scope;
 import com.technophobia.substeps.runner.ExecutionContext;
 
@@ -35,12 +37,12 @@ public class ExecutionContextSupplier<T> implements MutableSupplier<T> {
 
     @SuppressWarnings("unchecked")
     public T get() {
-        return (T) ExecutionContext.get(scope, key);
+        return (T) ExecutionContext.get(this.scope, this.key);
     }
 
 
     public void set(final T t) {
-        ExecutionContext.put(scope, key, t);
+        ExecutionContext.put(this.scope, this.key, t);
     }
 
 }

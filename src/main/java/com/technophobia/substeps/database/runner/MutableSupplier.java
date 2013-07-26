@@ -18,6 +18,8 @@
  */
 package com.technophobia.substeps.database.runner;
 
+//TODO remove this class when this class is moved out of webdriver-substeps and into substeps core
+
 import com.google.common.base.Supplier;
 
 public interface MutableSupplier<T> extends Supplier<T> {

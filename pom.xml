@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.technophobia.substeps</groupId>
 	<artifactId>database-substeps</artifactId>
-	<version>1.1.1-SNAPSHOT</version>
+	<version>1.2.0-SNAPSHOT</version>
 
 	<packaging>jar</packaging>
 	<name>Database Substeps</name>
@@ -42,15 +42,6 @@
 		</developer>
 
 		<developer>
-			<id>rorygibson</id>
-			<name>Rory Gibson</name>
-			<organization>Technophobia</organization>
-			<roles>
-				<role>developer</role>
-			</roles>
-		</developer>
-
-		<developer>
 			<id>davemoss</id>
 			<name>Dave Moss</name>
 			<organization>Technophobia</organization>
@@ -60,16 +51,6 @@
 		</developer>
 
 		<developer>
-			<id>stuartforbes</id>
-			<name>Stu Forbes</name>
-			<organization>Technophobia</organization>
-			<roles>
-				<role>developer</role>
-			</roles>
-		</developer>
-
-
-		<developer>
 			<id>rickybarefield</id>
 			<name>Ricky Barefield</name>
 			<organization>Technophobia</organization>
@@ -77,6 +58,14 @@
 				<role>developer</role>
 			</roles>
 		</developer>
+
+        <developer>
+            <id>alanraison</id>
+            <name>Alan Raison</name>
+            <roles>
+                <role>developer</role>
+            </roles>
+        </developer>
 
 	</developers>
 
@@ -123,11 +112,12 @@
 			<version>0.9.2-pre8</version>
 		</dependency>
 
-		<dependency>
-			<groupId>org.mybatis</groupId>
-			<artifactId>mybatis</artifactId>
-			<version>3.2.0</version>
-		</dependency>
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+            <version>3.2.0</version>
+        </dependency>
+
 
 		<!-- Test dependencies -->
 
@@ -228,13 +218,6 @@
 
 				<configuration>
 					<stepImplementationClassNames>
-                            <param>com.technophobia.webdriver.substeps.impl.AssertionWebDriverSubStepImplementations</param>
-                            <param>com.technophobia.webdriver.substeps.impl.ActionWebDriverSubStepImplementations</param>
-
-                            <param>com.technophobia.webdriver.substeps.impl.FinderWebDriverSubStepImplementations</param>
-                            <param>com.technophobia.webdriver.substeps.impl.FormWebDriverSubStepImplementations</param>
-                            <param>com.technophobia.webdriver.substeps.impl.StartupWebDriverSubStepImplementations</param>
-                            <param>com.technophobia.webdriver.substeps.impl.TableSubStepImplementations</param>
 						<param>com.technophobia.substeps.database.impl.DatabaseSubStepImplementations</param>
 					</stepImplementationClassNames>
 
@@ -284,6 +267,7 @@
 
 								<executionConfig>
 									<description>Self Test Features</description>
+                                   
 									<featureFile>${basedir}/target/test-classes/features</featureFile>
 									<subStepsFileName>${basedir}/target/test-classes/substeps</subStepsFileName>
 

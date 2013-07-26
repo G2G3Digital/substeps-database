@@ -1,15 +1,30 @@
-package com.technophobia.substeps.database.runner;
+/*
+ *  Copyright Technophobia Ltd & Alan Raison 2013
+ *
+ *   This file is part of Substeps.
+ *
+ *    Substeps is free software: you can redistribute it and/or modify
+ *    it under the terms of the GNU Lesser General Public License as published by
+ *    the Free Software Foundation, either version 3 of the License, or
+ *    (at your option) any later version.
+ *
+ *    Substeps is distributed in the hope that it will be useful,
+ *    but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *    GNU Lesser General Public License for more details.
+ *
+ *    You should have received a copy of the GNU Lesser General Public License
+ *    along with Substeps.  If not, see <http://www.gnu.org/licenses/>.
+ */
 
-import com.technophobia.substeps.model.Configuration;
+package com.technophobia.substeps.database.runner;
 
 import java.net.URL;
 
+import com.technophobia.substeps.model.Configuration;
+
 /**
- * Created with IntelliJ IDEA.
- * User: dmoss
- * Date: 22/01/13
- * Time: 16:27
- * To change this template use File | Settings | File Templates.
+ * Created with IntelliJ IDEA. User: dmoss Date: 22/01/13 Time: 16:27
  */
 public class DatabaseSubstepsConfiguration {
 
@@ -27,7 +42,8 @@ public class DatabaseSubstepsConfiguration {
     private static final int INITIAL_POOL_SIZE;
 
     static {
-        final URL defaultConfigurationURL = DatabaseSubstepsConfiguration.class.getResource("/default-database-substeps.properties");
+        final URL defaultConfigurationURL = DatabaseSubstepsConfiguration.class
+                .getResource("/default-database-substeps.properties");
         Configuration.INSTANCE.addDefaultProperties(defaultConfigurationURL, "default-database");
 
         DRIVER_CLASS = Configuration.INSTANCE.getString("database.driver.class");
@@ -44,49 +60,61 @@ public class DatabaseSubstepsConfiguration {
         INITIAL_POOL_SIZE = Configuration.INSTANCE.getInt("database.initial.pool.size");
     }
 
+
     public static String getDriverClass() {
         return DRIVER_CLASS;
     }
+
 
     public static String getJdbcUrl() {
         return JDBC_URL;
     }
 
+
     public static String getUser() {
         return USER;
     }
+
 
     public static String getPassword() {
         return PASSWORD;
     }
 
+
     public static String getNamedQueryPropertyFile() {
         return NAMED_QUERY_PROPERTY_FILE;
     }
+
 
     public static int getMaxPooledStatements() {
         return MAX_POOLED_STATEMENTS;
     }
 
+
     public static String getDatabaseType() {
         return DATABASE_TYPE;
     }
+
 
     public static int getMinPoolSize() {
         return MIN_POOL_SIZE;
     }
 
+
     public static int getMaxPoolSize() {
         return MAX_POOL_SIZE;
     }
+
 
     public static int getAcquireIncrement() {
         return ACQUIRE_INCREMENT;
     }
 
+
     public static int getMaxIdleTime() {
         return MAX_IDLE_TIME;
     }
+
 
     public static int getInitialPoolSize() {
         return INITIAL_POOL_SIZE;
