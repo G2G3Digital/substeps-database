@@ -78,6 +78,14 @@
 		<substeps.core.version>1.1.0</substeps.core.version>
 		<substeps.runners.version>1.1.0</substeps.runners.version>
 
+<!-- THESE PROPERTIES NEED TO BE DEFINED IN AN ACTIVE PROFILE IN SETTINGS.XML 
+            EG. 
+        <nexus.snapshot.artifacts>snapshots</nexus.snapshot.artifacts> <nexus.release.artifacts>releases</nexus.release.artifacts> 
+        <nexus.snapshot.url>http://someserver.com/${nexus.snapshot.artifacts}/</nexus.snapshot.url>
+        <nexus.releases.url>http://someserver.com/${nexus.release.artifacts}/</nexus.releases.url>
+        <database-substeps.scm>scm:git:git://github.com/${your username}/database-substeps.git</database-substeps.scm>
+        <database-substeps.scm.url></database-substeps.scm.url> -->
+
 	</properties>
 
 	<dependencies>
@@ -298,4 +306,35 @@
 
 		</plugins>
 	</build>
+  
+    <profiles>
+        
+        <!-- A profile used by default for internal dev, using the repos set up 
+            in proeprties defined above, rather than the OSS nexus repos -->
+        <profile>
+            <id>internalDev</id>
+             
+            <distributionManagement>
+                <snapshotRepository>
+                    <id>${nexus.snapshot.artifacts}</id>
+                    <name>${nexus.snapshot.artifacts}</name>
+                    <url>${nexus.snapshot.url}</url>
+                    <uniqueVersion>false</uniqueVersion>
+                </snapshotRepository>
+                <repository>
+                    <id>${nexus.release.artifacts}</id>
+                    <name>${nexus.release.artifacts}</name>
+                    <url>${nexus.releases.url}</url>
+                </repository>
+            </distributionManagement>
+            
+        </profile>
+    </profiles>
+    
+    <scm>
+        <connection>${database-substeps.scm}</connection>
+        <developerConnection>${database-substeps.scm}</developerConnection>
+        <url>${database-substeps.scm.url}</url>
+        <tag>HEAD</tag>
+    </scm>  
 </project>
