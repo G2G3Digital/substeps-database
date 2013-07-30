@@ -226,14 +226,14 @@
 
 				<configuration>
 					<stepImplementationClassNames>
-						<param>com.technophobia.substeps.database.impl.DatabaseSubStepImplementations</param>
+						<param>com.technophobia.substeps.database.impl.SQLSubStepImplementations</param>
+                        <param>com.technophobia.substeps.database.impl.NamedSqlSubStepImplementations</param>
 					</stepImplementationClassNames>
 
-					<glossaryPublisher
-						implementation="com.technophobia.substeps.glossary.HTMLSubstepsPublisher">
-						<outputFile>${project.build.directory}/stepimplementations.json</outputFile>
-					</glossaryPublisher>
-
+                    <glossaryPublisher implementation="com.technophobia.substeps.glossary.JsonSubstepsPublisher">
+                        <outputFile>${project.build.directory}/stepimplementations.json</outputFile>
+                    </glossaryPublisher>
+					
 				</configuration>
 
 
