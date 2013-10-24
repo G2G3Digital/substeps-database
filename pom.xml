@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.technophobia.substeps</groupId>
 	<artifactId>database-substeps</artifactId>
-	<version>1.2.0-SNAPSHOT</version>
+	<version>1.2.0</version>
 
 	<packaging>jar</packaging>
 	<name>Database Substeps</name>
@@ -277,8 +276,7 @@
 								</executionConfig>
 							</executionConfigs>
 
-							<executionReportBuilder
-								implementation="com.technophobia.substeps.report.DefaultExecutionReportBuilder">
+							<executionReportBuilder implementation="com.technophobia.substeps.report.DefaultExecutionReportBuilder">
 								<outputDirectory>${project.build.directory}</outputDirectory>
 								<reportTitle>Database Substeps - ${project.version}</reportTitle>
 							</executionReportBuilder>
@@ -317,6 +315,6 @@
         <connection>${database-substeps.scm}</connection>
         <developerConnection>${database-substeps.scm}</developerConnection>
         <url>${database-substeps.scm.url}</url>
-        <tag>HEAD</tag>
+        <tag>database-substeps-1.2.0</tag>
     </scm>  
 </project>
