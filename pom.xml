@@ -73,10 +73,10 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-		<substeps.api.version>1.1.0</substeps.api.version>
-		<substeps.glossary.version>1.1.0</substeps.glossary.version>
-		<substeps.core.version>1.1.0</substeps.core.version>
-		<substeps.runners.version>1.1.0</substeps.runners.version>
+		<substeps.api.version>1.1.1</substeps.api.version>
+		<substeps.glossary.version>1.1.1</substeps.glossary.version>
+		<substeps.core.version>1.1.1</substeps.core.version>
+		<substeps.runners.version>1.1.1</substeps.runners.version>
 
 <!-- THESE PROPERTIES NEED TO BE DEFINED IN AN ACTIVE PROFILE IN SETTINGS.XML 
             EG. 
@@ -236,15 +236,6 @@
 					
 				</configuration>
 
-
-				<dependencies>
-					<dependency>
-						<groupId>org.slf4j</groupId>
-						<artifactId>slf4j-log4j12</artifactId>
-						<version>1.6.4</version>
-					</dependency>
-				</dependencies>
-
 			</plugin>
 					<plugin>
 						<groupId>com.technophobia.substeps</groupId>
@@ -289,19 +280,10 @@
 							<executionReportBuilder
 								implementation="com.technophobia.substeps.report.DefaultExecutionReportBuilder">
 								<outputDirectory>${project.build.directory}</outputDirectory>
-								<reportTitle>Webdriver Substeps - ${project.version}</reportTitle>
+								<reportTitle>Database Substeps - ${project.version}</reportTitle>
 							</executionReportBuilder>
 
 						</configuration>
-						<dependencies>
-
-							<dependency>
-								<groupId>org.slf4j</groupId>
-								<artifactId>slf4j-log4j12</artifactId>
-								<version>1.6.4</version>
-							</dependency>
-
-						</dependencies>
 					</plugin>
 
 		</plugins>
