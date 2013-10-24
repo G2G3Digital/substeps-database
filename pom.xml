@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.technophobia.substeps</groupId>
 	<artifactId>database-substeps</artifactId>
-	<version>1.2.0</version>
+	<version>1.2.1-SNAPSHOT</version>
 
 	<packaging>jar</packaging>
 	<name>Database Substeps</name>
@@ -315,6 +315,6 @@
         <connection>${database-substeps.scm}</connection>
         <developerConnection>${database-substeps.scm}</developerConnection>
         <url>${database-substeps.scm.url}</url>
-        <tag>database-substeps-1.2.0</tag>
+        <tag>HEAD</tag>
     </scm>  
 </project>
