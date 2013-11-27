@@ -299,7 +299,7 @@ public class SQLSubStepImplementations {
             Assert.assertNotNull("mismatch of expected result size, found None, expected: " + size, resultSet);
         }
 
-        Assert.assertThat("mismatch of expected result size", size, equalTo(Integer.valueOf(resultSet.size())));
+        Assert.assertThat("mismatch of expected result size", Integer.valueOf(resultSet.size()), equalTo(size));
     }
 
 }
