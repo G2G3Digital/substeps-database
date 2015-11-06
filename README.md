@@ -1,4 +1,4 @@
-substeps-database
+substeps-database [![Build Status](https://travis-ci.org/G2G3Digital/substeps-database.svg)](https://travis-ci.org/G2G3Digital/substeps-database)
 =================
 
 Welcome to the substeps-database project!
